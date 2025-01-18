@@ -8,22 +8,23 @@
 # Input: coins = [1], amount = 0
 # Output: 0
 
-def combos(coins, a):
+def combos(coins, a, level=0):
     if a == 0:
         return 0
 
     cs = pick(coins, a)
     if not cs:
-        return None
+        return -1 if level==0 else None
 
     try:
-        return min(1 + combos(coins, a-c) for c in cs)
+        return min(1 + combos(coins, a-c, level+1) for c in cs)
     except TypeError:
         return -1
 
 def pick(coins, a):
     return [c for c in coins if c <= a]
 
-print(combos([5,2,1], 11))
-print(combos([2], 3))
 print(combos([1], 0))
+print(combos([2], 3))
+print(combos([2], 1))
+print(combos([5,2,1], 11))
